@@ -10,6 +10,8 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { IonicModule } from '@ionic/angular';
 import { PhotoInfo, StorageKeys } from '@shared/models';
 import { PhotoService, StorageService } from '@shared/services';
+import { addIcons } from 'ionicons';
+import { eye, eyeOff } from 'ionicons/icons';
 
 @Component({
   selector: 'app-login',
@@ -33,8 +35,13 @@ export default class LoginPage {
       validators: Validators.required,
     }),
   });
+  showPassword = false;
   avatarDefaultSrc = 'assets/webp/profile-photo-placeholder.webp';
   avatarSrc: string | SafeUrl = this.avatarDefaultSrc;
+
+  constructor(){
+    addIcons({ eye, eyeOff });
+  }
 
   ionViewWillEnter(): void {
     this.#storageService
