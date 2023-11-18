@@ -1,12 +1,9 @@
 <ion-content class="ion-padding">
   <div class="login-wrapper">
-    <div class="ion-activatable ripple-parent" (click)="uploadAvatarPhoto()">
-      <img
-        src="https://www.huntregional.org/wp-content/uploads/2023/08/profile-photo-placeholder.png"
-        class="circular-image"
-      />
+    <ion-avatar class="ion-activatable ripple-parent" (click)="uploadAvatarPhoto()">
+      <img alt="Avatar" [src]="avatarSrc" />
       <ion-ripple-effect></ion-ripple-effect>
-    </div>
+    </ion-avatar>
 
     <div [formGroup]="loginForm" class="login-form">
       <ion-input
