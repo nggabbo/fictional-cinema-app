@@ -1,11 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Camera, CameraResultType, Photo } from '@capacitor/camera';
-import {
-  Directory,
-  Encoding,
-  Filesystem,
-  ReadFileResult,
-} from '@capacitor/filesystem';
+import { Directory, Encoding, Filesystem, ReadFileResult } from '@capacitor/filesystem';
 import { PhotoInfo } from '@shared/models';
 
 @Injectable({
