@@ -9,24 +9,24 @@ import {
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { IonicModule } from '@ionic/angular';
 import { GenericToastComponent, GenericToastData } from '@shared/components';
-import { PhotoInfo, StorageKeys, Credential } from '@shared/models';
+import { Credential, PhotoInfo, StorageKeys } from '@shared/models';
 import { PhotoService, StorageService } from '@shared/services';
 import { addIcons } from 'ionicons';
 import { eye, eyeOff } from 'ionicons/icons';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
+  selector: 'app-auth',
+  templateUrl: './auth.page.html',
+  styleUrls: ['./auth.page.scss'],
   standalone: true,
   imports: [IonicModule, ReactiveFormsModule, NgStyle, GenericToastComponent],
 })
-export default class LoginPage {
+export default class AuthPage {
   #photoService = inject(PhotoService);
   #storageService = inject(StorageService);
   #sanitizer = inject(DomSanitizer);
 
-  loginForm = new FormGroup({
+  form = new FormGroup({
     username: new FormControl('', {
       nonNullable: true,
       validators: Validators.required,
@@ -37,7 +37,7 @@ export default class LoginPage {
     }),
   });
   showPassword = false;
-  signInToast: GenericToastData = {
+  authToast: GenericToastData = {
     isOpen: false,
     duration: 3500,
     position: 'top',
@@ -81,11 +81,10 @@ export default class LoginPage {
 
     if (!storedCredentials) {
       console.error('Error retrieving stored credentials.');
-      this.signInToast = {
+      this.authToast = {
         duration: 3500,
         isOpen: true,
-        message:
-          'There seems to have been an error logging in. Check your details and try again, or click "Forgot password?" if necessary.',
+        message: 'Oops! Wrong credentials. Retry or click "Create account".',
         position: 'top',
         color: 'danger',
       };
@@ -93,15 +92,14 @@ export default class LoginPage {
     }
 
     const credential = storedCredentials.find(
-      (credential) => credential.username === this.loginForm.value.username
+      (credential) => credential.username === this.form.value.username
     );
 
-    if (credential && credential.password === this.loginForm.value.password) {
-      await this.#storageService.set(
-        StorageKeys.ATO,
-        '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed'
-      );
-      this.signInToast = {
+    if (credential && credential.password === this.form.value.password) {
+      await this.#storageService.set(StorageKeys.AuthenticatedUser, {
+        username: credential.username,
+      });
+      this.authToast = {
         duration: 3500,
         isOpen: true,
         message:
@@ -110,7 +108,7 @@ export default class LoginPage {
         color: 'primary',
       };
     } else {
-      this.signInToast = {
+      this.authToast = {
         duration: 3500,
         isOpen: true,
         message:
@@ -119,5 +117,52 @@ export default class LoginPage {
         color: 'danger',
       };
     }
+  }
+
+  async createAccount(): Promise<void> {
+    const newCredential: Credential = {
+      username: this.form.value.username!,
+      password: this.form.value.password!,
+    };
+
+    const storedCredentials: Credential[] | null =
+      await this.#storageService.get(StorageKeys.Credentials);
+
+    if (storedCredentials) {
+      const userExists = storedCredentials.some(
+        (credential) => credential.username === newCredential.username
+      );
+
+      if (userExists) {
+        this.authToast = {
+          duration: 3500,
+          isOpen: true,
+          message:
+            'Oops! The username is already in use. Please choose another one.',
+          position: 'top',
+          color: 'danger',
+        };
+        return;
+      }
+
+      this.#storageService.set(StorageKeys.Credentials, [
+        ...storedCredentials,
+        newCredential,
+      ]);
+    } else {
+      this.#storageService.set(StorageKeys.Credentials, [newCredential]);
+    }
+
+    await this.#storageService.set(StorageKeys.AuthenticatedUser, {
+      username: this.form.value.username,
+    });
+    this.authToast = {
+      duration: 3500,
+      isOpen: true,
+      message:
+        'Hello there, new friend! Your registration was successful. Welcome to Fictional Cinema.',
+      position: 'top',
+      color: 'primary',
+    };
   }
 }

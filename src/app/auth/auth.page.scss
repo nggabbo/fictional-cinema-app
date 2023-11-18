@@ -1,4 +1,4 @@
-.login-wrapper {
+.auth-wrapper {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -15,7 +15,7 @@
   border-radius: 50%;
 }
 
-.login-form {
+.auth-form {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -29,15 +29,15 @@
     transition-duration: 150ms;
   }
 
-  ion-item{
+  ion-item {
     width: 100%;
-    &::part(native){
+    &::part(native) {
       border-radius: 0.25rem;
     }
   }
 }
 
-.login-form-buttons {
+.auth-form-buttons {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -49,4 +49,9 @@
     font-size: 1rem;
     line-height: 1.5rem;
   }
+}
+
+.or-text {
+  width: 100%;
+  text-align: center;
 }
