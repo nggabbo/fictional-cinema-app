@@ -55,9 +55,16 @@
       </ion-button>
       <app-generic-toast [toastData]="signInToast"></app-generic-toast>
 
-      <span class='or-text'> Or </span>
+      <span class="or-text"> Or </span>
 
-      <ion-button type="button" expand="block" fill="clear" color="secondary">
+      <ion-button
+        type="button"
+        expand="block"
+        fill="clear"
+        color="secondary"
+        [disabled]="form.invalid"
+        (click)="createAccount()"
+      >
         Create account
       </ion-button>
     </div>
