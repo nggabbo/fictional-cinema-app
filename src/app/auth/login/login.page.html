@@ -45,7 +45,15 @@
     </form>
 
     <div class="login-form-buttons">
-      <ion-button type="button" expand="block" [disabled]="loginForm.invalid"> Sign in </ion-button>
+      <ion-button
+        type="button"
+        expand="block"
+        [disabled]="loginForm.invalid"
+        (click)="signIn()"
+      >
+        Sign in
+      </ion-button>
+      <app-generic-toast [toastData]="signInToast"></app-generic-toast>
 
       <ion-button type="button" expand="block" fill="clear" color="secondary">
         Create account
