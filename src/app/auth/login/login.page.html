@@ -1,0 +1,38 @@
+<ion-content class="ion-padding">
+  <div class="login-wrapper">
+    <div class="ion-activatable ripple-parent" (click)="uploadAvatarPhoto()">
+      <img
+        src="https://www.huntregional.org/wp-content/uploads/2023/08/profile-photo-placeholder.png"
+        class="circular-image"
+      />
+      <ion-ripple-effect></ion-ripple-effect>
+    </div>
+
+    <div [formGroup]="loginForm" class="login-form">
+      <ion-input
+        label="Username"
+        label-placement="floating"
+        fill="solid"
+        placeholder="Prex"
+        formControlName="username"
+      ></ion-input>
+      <ion-input
+        label="Password"
+        label-placement="floating"
+        fill="solid"
+        placeholder="********"
+        formControlName="password"
+      ></ion-input>
+
+      <small> Forgot your password? </small>
+    </div>
+
+    <div class="login-form-buttons">
+      <ion-button type="button" expand="block"> Sign in </ion-button>
+
+      <ion-button type="button" expand="block" fill="clear" color="secondary">
+        Create account
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
