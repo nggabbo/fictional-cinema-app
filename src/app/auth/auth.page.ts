@@ -37,7 +37,7 @@ export default class AuthPage {
     }),
   });
   showPassword = false;
-  signInToast: GenericToastData = {
+  authToast: GenericToastData = {
     isOpen: false,
     duration: 3500,
     position: 'top',
@@ -81,7 +81,7 @@ export default class AuthPage {
 
     if (!storedCredentials) {
       console.error('Error retrieving stored credentials.');
-      this.signInToast = {
+      this.authToast = {
         duration: 3500,
         isOpen: true,
         message: 'Oops! Wrong credentials. Retry or click "Create account".',
@@ -99,7 +99,7 @@ export default class AuthPage {
       await this.#storageService.set(StorageKeys.AuthenticatedUser, {
         username: credential.username,
       });
-      this.signInToast = {
+      this.authToast = {
         duration: 3500,
         isOpen: true,
         message:
@@ -108,7 +108,7 @@ export default class AuthPage {
         color: 'primary',
       };
     } else {
-      this.signInToast = {
+      this.authToast = {
         duration: 3500,
         isOpen: true,
         message:
@@ -134,7 +134,7 @@ export default class AuthPage {
       );
 
       if (userExists) {
-        this.signInToast = {
+        this.authToast = {
           duration: 3500,
           isOpen: true,
           message:
@@ -156,7 +156,7 @@ export default class AuthPage {
     await this.#storageService.set(StorageKeys.AuthenticatedUser, {
       username: this.form.value.username,
     });
-    this.signInToast = {
+    this.authToast = {
       duration: 3500,
       isOpen: true,
       message:
