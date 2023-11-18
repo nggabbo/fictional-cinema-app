@@ -1,0 +1,63 @@
+<ion-content class="ion-padding">
+  <div class="login-wrapper">
+    <ion-avatar
+      class="ion-activatable ripple-parent"
+      (click)="uploadAvatarPhoto()"
+    >
+      <img alt="Avatar" [src]="avatarSrc" />
+      <ion-ripple-effect></ion-ripple-effect>
+    </ion-avatar>
+
+    <form [formGroup]="loginForm" class="login-form">
+      <ion-item lines="none">
+        <ion-input
+          label="Username"
+          label-placement="floating"
+          placeholder="Prex"
+          formControlName="username"
+          errorText="Please enter your username."
+        ></ion-input>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-input
+          [type]="showPassword ? 'text' : 'password'"
+          label="Password"
+          label-placement="floating"
+          placeholder="examplePassword"
+          formControlName="password"
+          errorText="Oops! Looks like you forgot to enter your password."
+        ></ion-input>
+        <ion-button
+          type="button"
+          slot="end"
+          fill="clear"
+          color="light"
+          (click)="showPassword = !showPassword"
+        >
+          <ion-icon
+            slot="icon-only"
+            [name]="showPassword ? 'eye-off' : 'eye'"
+          ></ion-icon
+        ></ion-button>
+      </ion-item>
+
+      <small> Forgot your password? </small>
+    </form>
+
+    <div class="login-form-buttons">
+      <ion-button
+        type="button"
+        expand="block"
+        [disabled]="loginForm.invalid"
+        (click)="signIn()"
+      >
+        Sign in
+      </ion-button>
+      <app-generic-toast [toastData]="signInToast"></app-generic-toast>
+
+      <ion-button type="button" expand="block" fill="clear" color="secondary">
+        Create account
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
