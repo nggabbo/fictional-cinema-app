@@ -1,5 +1,5 @@
 <ion-content class="ion-padding">
-  <div class="login-wrapper">
+  <div class="auth-wrapper">
     <ion-avatar
       class="ion-activatable ripple-parent"
       (click)="uploadAvatarPhoto()"
@@ -8,7 +8,7 @@
       <ion-ripple-effect></ion-ripple-effect>
     </ion-avatar>
 
-    <form [formGroup]="loginForm" class="login-form">
+    <form [formGroup]="form" class="auth-form">
       <ion-item lines="none">
         <ion-input
           label="Username"
@@ -44,16 +44,18 @@
       <small> Forgot your password? </small>
     </form>
 
-    <div class="login-form-buttons">
+    <div class="auth-form-buttons">
       <ion-button
         type="button"
         expand="block"
-        [disabled]="loginForm.invalid"
+        [disabled]="form.invalid"
         (click)="signIn()"
       >
         Sign in
       </ion-button>
       <app-generic-toast [toastData]="signInToast"></app-generic-toast>
+
+      <span class='or-text'> Or </span>
 
       <ion-button type="button" expand="block" fill="clear" color="secondary">
         Create account

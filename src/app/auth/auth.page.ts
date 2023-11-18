@@ -15,18 +15,18 @@ import { addIcons } from 'ionicons';
 import { eye, eyeOff } from 'ionicons/icons';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
+  selector: 'app-auth',
+  templateUrl: './auth.page.html',
+  styleUrls: ['./auth.page.scss'],
   standalone: true,
   imports: [IonicModule, ReactiveFormsModule, NgStyle, GenericToastComponent],
 })
-export default class LoginPage {
+export default class AuthPage {
   #photoService = inject(PhotoService);
   #storageService = inject(StorageService);
   #sanitizer = inject(DomSanitizer);
 
-  loginForm = new FormGroup({
+  form = new FormGroup({
     username: new FormControl('', {
       nonNullable: true,
       validators: Validators.required,
@@ -93,10 +93,10 @@ export default class LoginPage {
     }
 
     const credential = storedCredentials.find(
-      (credential) => credential.username === this.loginForm.value.username
+      (credential) => credential.username === this.form.value.username
     );
 
-    if (credential && credential.password === this.loginForm.value.password) {
+    if (credential && credential.password === this.form.value.password) {
       await this.#storageService.set(
         StorageKeys.ATO,
         '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed'
