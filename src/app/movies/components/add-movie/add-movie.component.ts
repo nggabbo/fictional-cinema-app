@@ -79,6 +79,7 @@ export default class AddMovieComponent {
       nonNullable: true,
       validators: Validators.required,
     }),
+    rate: new FormControl(0, { nonNullable: true }),
   });
 
   ionViewWillEnter(): void {
