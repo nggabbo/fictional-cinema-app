@@ -1,8 +1,6 @@
-import { PhotoInfo } from "@shared/models";
-
 export interface Movie{
     uuid: string;
-    image: PhotoInfo;
+    imagePath: string;
     title: string;
     description: string;
     shortDescription: string;

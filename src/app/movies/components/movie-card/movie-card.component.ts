@@ -40,7 +40,7 @@ export class MovieCardComponent {
     rate: 0,
     releaseDate: '',
     genre: '',
-    image: { filepath: '', webviewPath: '' },
+    imagePath: '',
   };
 
   constructor() {
