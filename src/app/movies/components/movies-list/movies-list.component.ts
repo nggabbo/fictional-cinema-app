@@ -1,15 +1,21 @@
 import { Component } from '@angular/core';
+import { IonFab, IonFabButton, IonIcon } from '@ionic/angular/standalone';
 import { Movie } from '@shared/models';
+import { addIcons } from 'ionicons';
+import { add } from 'ionicons/icons';
 import { MovieCardComponent } from '../movie-card/movie-card.component';
-
+import { RouterLink } from '@angular/router';
 @Component({
   standalone: true,
-  imports: [MovieCardComponent],
+  imports: [IonFab, IonFabButton, IonIcon, RouterLink, MovieCardComponent],
   selector: 'app-movies-list',
   templateUrl: './movies-list.component.html',
   styleUrls: ['./movies-list.component.scss'],
 })
 export default class MoviesListComponent {
+  constructor() {
+    addIcons({ add });
+  }
   movies: Movie[] = [
     {
       uuid: '',
@@ -21,7 +27,7 @@ export default class MoviesListComponent {
       rate: 3,
       releaseDate: '',
       genre: '',
-      image: { filepath: '', webviewPath: '' },
+      imagePath: '',
     },
   ];
 }
