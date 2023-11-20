@@ -8,13 +8,14 @@ import {
   IonCardHeader,
   IonCardSubtitle,
   IonCardTitle,
+  IonChip,
   IonIcon,
 } from '@ionic/angular/standalone';
 import { FallbackImageDirective } from '@shared/directives';
 import { Movie, StorageKeys } from '@shared/models';
 import { StorageService, MoviesListService } from '@shared/services';
 import { addIcons } from 'ionicons';
-import { create, trash } from 'ionicons/icons';
+import { create, trash, eye } from 'ionicons/icons';
 import { MovieRateComponent } from '../movie-rate/movie-rate.component';
 
 @Component({
@@ -27,6 +28,7 @@ import { MovieRateComponent } from '../movie-rate/movie-rate.component';
     IonCardContent,
     IonButton,
     IonIcon,
+    IonChip,
     MovieRateComponent,
     FallbackImageDirective,
   ],
@@ -52,7 +54,7 @@ export class MovieCardComponent {
   #moviesListService = inject(MoviesListService);
 
   constructor() {
-    addIcons({ trash, create });
+    addIcons({ trash, create, eye });
   }
 
   navigateForEditMovie(): void {
@@ -94,5 +96,9 @@ export class MovieCardComponent {
     );
     await this.#storageService.set(StorageKeys.Movies, moviesFiltered);
     this.#moviesListService.triggerListRefresh();
+  }
+
+  showMovie(): void {
+    this.#router.navigate(['/movies/show/', this.movieData.uuid]);
   }
 }
