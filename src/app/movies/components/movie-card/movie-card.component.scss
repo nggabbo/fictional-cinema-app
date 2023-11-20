@@ -14,4 +14,10 @@ img {
 
 ion-card {
   height: 367px;
+  display: flex;
+  flex-direction: column;
+}
+
+ion-card-content {
+  flex: 1;
 }
