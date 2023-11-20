@@ -1,0 +1,32 @@
+<ion-menu contentId="movies-content">
+  <ion-header>
+    <ion-toolbar color="secondary">
+      <ion-buttons slot="end">
+        <ion-menu-button>
+          <ion-icon name="close"></ion-icon>
+        </ion-menu-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <app-navigation-list-component></app-navigation-list-component>
+  </ion-content>
+  <ion-footer>
+    <ion-toolbar>
+      <ion-title>Footer</ion-title>
+    </ion-toolbar>
+  </ion-footer>
+</ion-menu>
+<div class="ion-page" id="movies-content">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title> Movies </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    <ion-router-outlet></ion-router-outlet>
+  </ion-content>
+</div>

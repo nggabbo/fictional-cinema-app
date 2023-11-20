@@ -6,6 +6,10 @@ export const routes: Routes = [
     loadComponent: () => import('./auth/auth.page'),
   },
   {
+    path: 'movies',
+    loadChildren: () => import('./movies/movies.routes'),
+  },
+  {
     path: '**',
     redirectTo: 'auth',
     pathMatch: 'full',
