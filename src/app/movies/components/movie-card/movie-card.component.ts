@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import {
   IonButton,
   IonCard,
@@ -13,6 +13,7 @@ import { addIcons } from 'ionicons';
 import { trash, create } from 'ionicons/icons';
 import { MovieRateComponent } from '../movie-rate/movie-rate.component';
 import { FallbackImageDirective } from '@shared/directives';
+import { Router } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -25,7 +26,7 @@ import { FallbackImageDirective } from '@shared/directives';
     IonButton,
     IonIcon,
     MovieRateComponent,
-    FallbackImageDirective
+    FallbackImageDirective,
   ],
   selector: 'app-movie-card',
   templateUrl: './movie-card.component.html',
@@ -43,7 +44,13 @@ export class MovieCardComponent {
     imagePath: '',
   };
 
+  #router = inject(Router);
+
   constructor() {
     addIcons({ trash, create });
+  }
+
+  navigateForEditMovie(): void {
+    this.#router.navigate(['/movies/edit/', this.movieData.uuid]);
   }
 }
