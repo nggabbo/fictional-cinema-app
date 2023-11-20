@@ -13,8 +13,8 @@ import { star } from 'ionicons/icons';
   styleUrls: ['./movie-rate.component.scss'],
 })
 export class MovieRateComponent {
-  @Input() rate: number = 0;
-  @Input() uuid: string = '';
+  @Input({required: true}) rate: number = 0;
+  @Input({required: true}) uuid: string = '';
 
   #storageService = inject(StorageService);
 
