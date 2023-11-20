@@ -1,5 +1,5 @@
 <div class="add-movie-container">
-  <h1 class="add-movie-title">Add movie</h1>
+  <h1 class="add-movie-title">{{ uuid ? 'Edit movie' : 'Add movie' }}</h1>
 
   <ion-thumbnail class="ion-activatable" (click)="uploadMovieImage()">
     <img [src]="movieImage" fallbackImage />
@@ -82,7 +82,7 @@
       >
         Cancel
       </ion-button>
-      <ion-button type="button" (click)="saveMovie()"> Save </ion-button>
+      <ion-button type="button" [disabled]="form.invalid" (click)="saveMovie()"> Save </ion-button>
     </div>
   </form>
 </div>

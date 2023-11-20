@@ -16,6 +16,11 @@ export default [
           import('./components/add-movie/add-movie.component'),
       },
       {
+        path: 'edit/:uuid',
+        loadComponent: () =>
+          import('./components/add-movie/add-movie.component'),
+      },
+      {
         path: '**',
         redirectTo: 'list',
         pathMatch: 'full',
