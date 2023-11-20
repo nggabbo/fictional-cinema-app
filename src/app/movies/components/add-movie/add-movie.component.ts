@@ -6,7 +6,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 import {
   IonButton,
   IonDatetime,
@@ -48,9 +49,11 @@ import { GenerateUUID } from '@shared/utils';
 export default class AddMovieComponent {
   @Input() uuid: string = '';
 
+  #sanitizer = inject(DomSanitizer);
+  #router = inject(Router);
+  #toastCtrl = inject(ToastController);
   #photoService = inject(PhotoService);
   #storageService = inject(StorageService);
-  #sanitizer = inject(DomSanitizer);
 
   movieImage: SafeUrl | string = 'assets/webp/movie-fallback.webp';
   todayDate = new Date().toISOString();
@@ -97,12 +100,22 @@ export default class AddMovieComponent {
     }
   }
 
-  saveMovie(): void {
+  async saveMovie(): Promise<void> {
     if (this.uuid) {
       this.updateMovie();
     } else {
       this.createMovie();
     }
+    this.#router.navigate(['/movies']);
+    const toast = await this.#toastCtrl.create({
+      message: 'Success! Your movie has been saved.',
+      duration: 3500,
+      position: 'bottom',
+      color: 'tertiary',
+      translucent: true,
+      animated: true
+    });
+    await toast.present();
   }
 
   async updateMovie(): Promise<void> {
@@ -116,7 +129,7 @@ export default class AddMovieComponent {
         }
         return movie;
       });
-      this.#storageService.set(StorageKeys.Movies, movies);
+      await this.#storageService.set(StorageKeys.Movies, movies);
     }
   }
 
@@ -127,9 +140,9 @@ export default class AddMovieComponent {
     );
     if (moviesStored) {
       const movies = [...moviesStored, this.form.value];
-      this.#storageService.set(StorageKeys.Movies, movies);
+      await this.#storageService.set(StorageKeys.Movies, movies);
     } else {
-      this.#storageService.set(StorageKeys.Movies, [this.form.value]);
+      await this.#storageService.set(StorageKeys.Movies, [this.form.value]);
     }
   }
 
