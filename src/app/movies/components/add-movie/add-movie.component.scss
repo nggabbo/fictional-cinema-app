@@ -1,0 +1,39 @@
+.add-movie-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 16px;
+}
+
+.add-movie-title{
+  width: 100%;
+  margin-top: 0;
+}
+
+.movie-form{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-buttons{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+ion-item::part(native) {
+  border-radius: 4px;
+}
+
+ion-thumbnail {
+    position: relative;
+    overflow: hidden;
+  --size: 200px;
+  --border-radius: 14px;
+}

@@ -1,0 +1,17 @@
+.show-movie-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 1rem;
+
+  ion-thumbnail {
+    overflow: hidden;
+    --size: 200px;
+    --border-radius: 14px;
+  }
+}
+
+p, h2{
+    margin: 0;
+}

@@ -3,6 +3,7 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import {
   RouteReuseStrategy,
   provideRouter,
+  withComponentInputBinding,
   withViewTransitions,
 } from '@angular/router';
 import {
@@ -23,7 +24,7 @@ bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
-    provideRouter(routes, withViewTransitions()),
+    provideRouter(routes, withViewTransitions(), withComponentInputBinding()),
     importProvidersFrom(
       IonicStorageModule.forRoot({
         name: '__fictional-cinema-db',

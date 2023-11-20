@@ -1,0 +1,10 @@
+<div class="movies-container">
+  @for (movie of movies; track movie.uuid) {
+  <app-movie-card [movieData]="movie"></app-movie-card>
+  }
+</div>
+<ion-fab slot="fixed" vertical="bottom" horizontal="end">
+  <ion-fab-button routerLink="/movies/add">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab>

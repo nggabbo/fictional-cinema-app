@@ -1,0 +1,10 @@
+<div class='movie-rate-wrapper'>
+  @for (starIndex of [0, 1, 2, 3, 4]; track starIndex; let idx = $index) {
+  <ion-icon
+    name="star"
+    [color]="starIndex < rate ? 'primary' : ''"
+    size="large"
+    (click)="selectRate(idx + 1)"
+  ></ion-icon>
+  }
+</div>
