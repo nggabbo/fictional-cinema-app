@@ -1,0 +1,19 @@
+<div class="show-movie-container">
+  <ion-thumbnail>
+    <img [src]="imageMoviePath" fallbackImage />
+  </ion-thumbnail>
+  
+  <app-movie-rate [uuid]="uuid" [rate]="movie?.rate ?? 0"></app-movie-rate>
+
+  <h2>{{ movie?.title }}</h2>
+
+  <p>
+    {{ movie?.description }}
+  </p>
+
+  <p>{{ movie?.shortDescription }}</p>
+
+  <span> {{ movie?.genre }} </span>
+
+  <span> {{ movie?.releaseDate | date:'longDate' }} </span>
+</div>
