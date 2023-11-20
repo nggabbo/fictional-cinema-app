@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import {
   IonButtons,
   IonContent,
-  IonFab,
-  IonFabButton,
   IonFooter,
   IonHeader,
   IonIcon,
@@ -16,7 +13,7 @@ import {
 } from '@ionic/angular/standalone';
 import { NavigationListComponent } from '@shared/components';
 import { addIcons } from 'ionicons';
-import { close, add } from 'ionicons/icons';
+import { close } from 'ionicons/icons';
 
 @Component({
   selector: 'app-movies',
@@ -34,14 +31,11 @@ import { close, add } from 'ionicons/icons';
     IonMenuButton,
     IonIcon,
     IonFooter,
-    IonFab,
-    IonFabButton,
-    RouterLink,
     NavigationListComponent,
   ],
 })
 export default class MoviesPage {
   constructor() {
-    addIcons({ close, add });
+    addIcons({ close });
   }
 }
