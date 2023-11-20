@@ -1,5 +1,7 @@
 import { Component, Input, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import {
+  AlertController,
   IonButton,
   IonCard,
   IonCardContent,
@@ -8,12 +10,12 @@ import {
   IonCardTitle,
   IonIcon,
 } from '@ionic/angular/standalone';
-import { Movie } from '@shared/models';
-import { addIcons } from 'ionicons';
-import { trash, create } from 'ionicons/icons';
-import { MovieRateComponent } from '../movie-rate/movie-rate.component';
 import { FallbackImageDirective } from '@shared/directives';
-import { Router } from '@angular/router';
+import { Movie, StorageKeys } from '@shared/models';
+import { StorageService, MoviesListService } from '@shared/services';
+import { addIcons } from 'ionicons';
+import { create, trash } from 'ionicons/icons';
+import { MovieRateComponent } from '../movie-rate/movie-rate.component';
 
 @Component({
   standalone: true,
@@ -45,6 +47,9 @@ export class MovieCardComponent {
   };
 
   #router = inject(Router);
+  #storageService = inject(StorageService);
+  #alertCtrl = inject(AlertController);
+  #moviesListService = inject(MoviesListService);
 
   constructor() {
     addIcons({ trash, create });
@@ -52,5 +57,42 @@ export class MovieCardComponent {
 
   navigateForEditMovie(): void {
     this.#router.navigate(['/movies/edit/', this.movieData.uuid]);
+  }
+
+  async showRemoveMovieAlert(): Promise<void> {
+    const alert = await this.#alertCtrl.create({
+      header: 'Remove Movie',
+      message: 'Are you sure you want to remove this movie?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {},
+        },
+        {
+          text: 'Remove',
+          handler: async () => await this.removeMovie(),
+        },
+      ],
+      animated: true,
+      translucent: true,
+    });
+
+    await alert.present();
+  }
+
+  async removeMovie(): Promise<void> {
+    const moviesStored: Movie[] = await this.#storageService.get(
+      StorageKeys.Movies
+    );
+    if (!moviesStored) {
+      return;
+    }
+
+    const moviesFiltered = moviesStored.filter(
+      (movie) => movie.uuid !== this.movieData.uuid
+    );
+    await this.#storageService.set(StorageKeys.Movies, moviesFiltered);
+    this.#moviesListService.triggerListRefresh();
   }
 }
