@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { IonFab, IonFabButton, IonIcon } from '@ionic/angular/standalone';
-import { Movie } from '@shared/models';
+import { Movie, StorageKeys } from '@shared/models';
 import { addIcons } from 'ionicons';
 import { add } from 'ionicons/icons';
 import { MovieCardComponent } from '../movie-card/movie-card.component';
 import { RouterLink } from '@angular/router';
+import { StorageService } from '@shared/services';
 @Component({
   standalone: true,
   imports: [IonFab, IonFabButton, IonIcon, RouterLink, MovieCardComponent],
@@ -13,21 +14,21 @@ import { RouterLink } from '@angular/router';
   styleUrls: ['./movies-list.component.scss'],
 })
 export default class MoviesListComponent {
+  #storageService = inject(StorageService);
+  movies: Movie[] = [];
+
   constructor() {
     addIcons({ add });
   }
-  movies: Movie[] = [
-    {
-      uuid: '',
-      title: 'Title test',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum interdum nisi odio, eget commodo nunc condimentum eget. Ut facilisis metus scelerisque lectus tincidunt luctus.',
-      shortDescription:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum interdum nisi odio, eget commodo nunc condimentum eget. Ut facilisis metus scelerisque lectus tincidunt luctus.',
-      rate: 3,
-      releaseDate: '',
-      genre: '',
-      imagePath: '',
-    },
-  ];
+
+  ionViewWillEnter(): void {
+    this.#storageService
+      .get(StorageKeys.Movies)
+      .then((movies: Movie[]) => {
+        this.movies = movies;
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
 }
