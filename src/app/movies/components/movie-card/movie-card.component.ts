@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   AlertController,
@@ -13,10 +13,15 @@ import {
 } from '@ionic/angular/standalone';
 import { FallbackImageDirective } from '@shared/directives';
 import { Movie, StorageKeys } from '@shared/models';
-import { StorageService, MoviesListService } from '@shared/services';
+import {
+  StorageService,
+  MoviesListService,
+  PhotoService,
+} from '@shared/services';
 import { addIcons } from 'ionicons';
 import { create, trash, eye } from 'ionicons/icons';
 import { MovieRateComponent } from '../movie-rate/movie-rate.component';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   standalone: true,
@@ -36,7 +41,7 @@ import { MovieRateComponent } from '../movie-rate/movie-rate.component';
   templateUrl: './movie-card.component.html',
   styleUrls: ['./movie-card.component.scss'],
 })
-export class MovieCardComponent {
+export class MovieCardComponent implements OnInit {
   @Input({ required: true }) movieData: Movie = {
     uuid: '',
     title: '',
@@ -49,12 +54,20 @@ export class MovieCardComponent {
   };
 
   #router = inject(Router);
+  #photoService = inject(PhotoService);
+  #sanitizer = inject(DomSanitizer);
   #storageService = inject(StorageService);
   #alertCtrl = inject(AlertController);
   #moviesListService = inject(MoviesListService);
 
+  imageMoviePath: SafeUrl | string = '';
+
   constructor() {
     addIcons({ trash, create, eye });
+  }
+
+  ngOnInit(): void {
+    this.findImageStored(this.movieData.imagePath);
   }
 
   navigateForEditMovie(): void {
@@ -100,5 +113,15 @@ export class MovieCardComponent {
 
   showMovie(): void {
     this.#router.navigate(['/movies/show/', this.movieData.uuid]);
+  }
+
+  async findImageStored(path: string): Promise<void> {
+    const readFileResult = await this.#photoService.getFromGallery(path);
+    if (readFileResult) {
+      const base64Data = readFileResult.data as string;
+
+      // Convert the base64 to a safe data URL
+      this.imageMoviePath = this.#sanitizer.bypassSecurityTrustUrl(base64Data);
+    }
   }
 }
