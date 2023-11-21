@@ -1,7 +1,7 @@
 {
   "name": "fictional-cinema-app",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
+  "version": "0.2.0",
+  "author": "Gabriel Ruiz",
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "ng": "ng",
