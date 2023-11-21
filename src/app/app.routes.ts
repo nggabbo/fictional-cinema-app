@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from '@shared/guards';
 
 export const routes: Routes = [
   {
@@ -8,10 +9,11 @@ export const routes: Routes = [
   {
     path: 'movies',
     loadChildren: () => import('./movies/movies.routes'),
+    canActivate: [AuthGuard],
   },
   {
     path: '**',
-    redirectTo: 'auth',
+    redirectTo: 'movies',
     pathMatch: 'full',
   },
 ];
