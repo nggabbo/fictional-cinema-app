@@ -2,7 +2,11 @@
   <ion-header>
     <ion-toolbar color="secondary">
       <ion-avatar>
-        <img [src]='avatarImagePath' fallbackImage urlFallback='assets/webp/profile-photo-placeholder.webp' />
+        <img
+          [src]="avatarImagePath"
+          fallbackImage
+          urlFallback="assets/webp/profile-photo-placeholder.webp"
+        />
       </ion-avatar>
       <ion-buttons slot="end">
         <ion-menu-button>
@@ -14,9 +18,9 @@
   <ion-content>
     <app-navigation-list-component></app-navigation-list-component>
   </ion-content>
-  <ion-footer>
-    <ion-toolbar>
-      <ion-title>Footer</ion-title>
+  <ion-footer translucent class='ion-no-border'>
+    <ion-toolbar class="ion-padding-horizontal">
+      <ion-button style="width: 100%" color="secondary" (click)='signOut()'> Sign Out </ion-button>
     </ion-toolbar>
   </ion-footer>
 </ion-menu>

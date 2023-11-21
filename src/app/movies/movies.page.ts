@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import {
   IonAvatar,
+  IonButton,
   IonButtons,
   IonContent,
   IonFooter,
@@ -19,6 +20,7 @@ import { close } from 'ionicons/icons';
 import { PhotoService, StorageService } from '@shared/services';
 import { StorageKeys, PhotoInfo } from '@shared/models';
 import { FallbackImageDirective } from '@shared/directives';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-movies',
@@ -37,14 +39,16 @@ import { FallbackImageDirective } from '@shared/directives';
     IonIcon,
     IonFooter,
     IonAvatar,
+    IonButton,
     NavigationListComponent,
-    FallbackImageDirective
+    FallbackImageDirective,
   ],
 })
 export default class MoviesPage implements OnInit {
   #photoService = inject(PhotoService);
   #storageService = inject(StorageService);
   #sanitizer = inject(DomSanitizer);
+  #router = inject(Router);
 
   avatarImagePath: SafeUrl | string = '';
 
@@ -65,7 +69,6 @@ export default class MoviesPage implements OnInit {
 
   // TODO: Refactor this and all matching ones. Create a service or directive to reuse.
   async findImageStored(path: string): Promise<void> {
-    console.log(path, 'a')
     const readFileResult = await this.#photoService.getFromGallery(path);
     if (readFileResult) {
       const base64Data = readFileResult.data as string;
@@ -73,5 +76,10 @@ export default class MoviesPage implements OnInit {
       // Convert the base64 to a safe data URL
       this.avatarImagePath = this.#sanitizer.bypassSecurityTrustUrl(base64Data);
     }
+  }
+
+  async signOut(): Promise<void> {
+    await this.#storageService.set(StorageKeys.AuthenticatedUser, undefined);
+    this.#router.navigate(['/auth']);
   }
 }
