@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { GenericToastComponent, GenericToastData } from '@shared/components';
 import { Credential, PhotoInfo, StorageKeys } from '@shared/models';
@@ -25,6 +26,7 @@ export default class AuthPage {
   #photoService = inject(PhotoService);
   #storageService = inject(StorageService);
   #sanitizer = inject(DomSanitizer);
+  #router = inject(Router);
 
   form = new FormGroup({
     username: new FormControl('', {
@@ -107,6 +109,7 @@ export default class AuthPage {
         position: 'top',
         color: 'primary',
       };
+      this.#router.navigate(['/movies']);
     } else {
       this.authToast = {
         duration: 3500,
