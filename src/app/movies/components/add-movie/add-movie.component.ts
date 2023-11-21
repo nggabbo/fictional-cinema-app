@@ -113,7 +113,7 @@ export default class AddMovieComponent {
       position: 'bottom',
       color: 'tertiary',
       translucent: true,
-      animated: true
+      animated: true,
     });
     await toast.present();
   }
@@ -161,6 +161,7 @@ export default class AddMovieComponent {
     }
   }
 
+  // TODO: Refactor this and all matching ones. Create a service or directive to reuse.
   async findImageStored(path: string): Promise<void> {
     const readFileResult = await this.#photoService.getFromGallery(path);
     if (readFileResult) {

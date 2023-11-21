@@ -46,6 +46,7 @@ export default class ShowMovieComponent {
     }
   }
 
+  // TODO: Refactor this and all matching ones. Create a service or directive to reuse.
   async findImageStored(path: string): Promise<void> {
     const readFileResult = await this.#photoService.getFromGallery(path);
     if (readFileResult) {

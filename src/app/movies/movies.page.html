@@ -1,6 +1,9 @@
 <ion-menu contentId="movies-content">
   <ion-header>
     <ion-toolbar color="secondary">
+      <ion-avatar>
+        <img [src]='avatarImagePath' fallbackImage urlFallback='assets/webp/profile-photo-placeholder.webp' />
+      </ion-avatar>
       <ion-buttons slot="end">
         <ion-menu-button>
           <ion-icon name="close"></ion-icon>

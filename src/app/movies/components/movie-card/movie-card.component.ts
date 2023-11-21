@@ -115,6 +115,7 @@ export class MovieCardComponent implements OnInit {
     this.#router.navigate(['/movies/show/', this.movieData.uuid]);
   }
 
+  // TODO: Refactor this and all matching ones. Create a service or directive to reuse.
   async findImageStored(path: string): Promise<void> {
     const readFileResult = await this.#photoService.getFromGallery(path);
     if (readFileResult) {
