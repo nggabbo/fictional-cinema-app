@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">fictional-cinema-app</string>
-    <string name="title_activity_main">fictional-cinema-app</string>
+    <string name="app_name">Fictional Cinema</string>
+    <string name="title_activity_main">Fictional Cinema</string>
     <string name="package_name">fictional.cinema.app</string>
     <string name="custom_url_scheme">fictional.cinema.app</string>
 </resources>
