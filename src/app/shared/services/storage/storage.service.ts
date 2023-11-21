@@ -9,11 +9,7 @@ export class StorageService {
   #storage: Storage | null = null;
   #storageService = inject(Storage);
 
-  constructor() {
-    this.#init();
-  }
-
-  async #init() {
+  public async init() {
     const storage = await this.#storageService.create();
     this.#storage = storage;
   }
